@@ -45,17 +45,11 @@ export default function Home() {
               initialValues={{ firstName: "", lastName: "", email: "" }}
               validationSchema={Yup.object({
                 firstName: Yup.string()
-
                   .max(15, "Must be 15 characters or less")
-
                   .required("Required"),
-
                 lastName: Yup.string()
-
                   .max(20, "Must be 20 characters or less")
-
                   .required("Required"),
-
                 email: Yup.string()
                   .email("Invalid email address")
                   .required("Required"),
@@ -70,8 +64,9 @@ export default function Home() {
             >
               {(formik) => (
                 <Form>
-                  <FormLabel htmlFor="firstName">First Name</FormLabel>
-
+                  <FormLabel mt="2rem" htmlFor="firstName">
+                    First Name
+                  </FormLabel>
                   <Input
                     id="firstName"
                     type="text"
@@ -84,8 +79,9 @@ export default function Home() {
                     </FormErrorMessage>
                   ) : null}
 
-                  <FormLabel htmlFor="lastName">Last Name</FormLabel>
-
+                  <FormLabel mt="1rem" htmlFor="lastName">
+                    Last Name
+                  </FormLabel>
                   <Input
                     id="lastName"
                     type="text"
@@ -98,8 +94,9 @@ export default function Home() {
                     </FormErrorMessage>
                   ) : null}
 
-                  <FormLabel htmlFor="email">Email Address</FormLabel>
-
+                  <FormLabel mt="1rem" htmlFor="email">
+                    Email Address
+                  </FormLabel>
                   <Input
                     id="email"
                     type="email"
@@ -109,8 +106,9 @@ export default function Home() {
                   {formik.touched.email && formik.errors.email ? (
                     <FormErrorMessage>{formik.errors.email}</FormErrorMessage>
                   ) : null}
-
-                  <Button type="submit">Submit</Button>
+                  <Center mt="1rem">
+                    <Button type="submit">Submit</Button>
+                  </Center>
                 </Form>
               )}
             </Formik>
