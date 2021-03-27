@@ -5,18 +5,34 @@ import {
   Center,
   Heading,
   Input,
-  Text,
   FormControl,
   FormLabel,
   FormErrorMessage,
-  FormHelperText,
 } from "@chakra-ui/react";
 import React from "react";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 
-// https://chakra-ui.com/docs/form/form-control
-// https://formik.org/docs/api/field
+const yupSchema = Yup.object({
+  firstName: Yup.string()
+    .max(15, "Must be 15 characters or less")
+    .required("Enter your first name"),
+  lastName: Yup.string()
+    .max(20, "Must be 20 characters or less")
+    .required("Enter your last name"),
+  email: Yup.string().email("Enter a valid email").required("Enter your email"),
+  confirmEmail: Yup.string()
+    .email("Enter a valid email")
+    .oneOf([Yup.ref("email"), null], "Emails must match")
+    .required("Please confirm your email"),
+});
+
+const submitForm = (values, { setSubmitting }) => {
+  setTimeout(() => {
+    alert(JSON.stringify(values, null, 2));
+    setSubmitting(false);
+  }, 400);
+};
 
 export default function Home() {
   return (
@@ -47,26 +63,8 @@ export default function Home() {
                 email: "",
                 confirmEmail: "",
               }}
-              validationSchema={Yup.object({
-                firstName: Yup.string()
-                  .max(15, "Must be 15 characters or less")
-                  .required("Enter your first name"),
-                lastName: Yup.string()
-                  .max(20, "Must be 20 characters or less")
-                  .required("Enter your last name"),
-                email: Yup.string()
-                  .email("Enter a valid email")
-                  .required("Enter your email"),
-                confirmEmail: Yup.string()
-                  .email("Enter a valid email")
-                  .required("Please confirm your email"),
-              })}
-              onSubmit={(values, { setSubmitting }) => {
-                setTimeout(() => {
-                  alert(JSON.stringify(values, null, 2));
-                  setSubmitting(false);
-                }, 400);
-              }}
+              validationSchema={yupSchema}
+              onSubmit={submitForm}
             >
               {(formik) => (
                 <Form>
